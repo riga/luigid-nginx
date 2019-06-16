@@ -1,7 +1,7 @@
 FROM centos:7
 
 # labels
-LABEL name="luigid-nginx"
+LABEL name="riga/luigid-nginx"
 LABEL version="0.0.1"
 
 # ports
@@ -35,7 +35,7 @@ export PATH="$PATH:$HOME/.local/bin"\n\
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python2.7/site-packages"\n' >> /etc/bashrc
 RUN pip install luigi --user
 
-# default command, saved as an alias
+# default command, saved as aliases
 RUN echo 'alias run_nginx="nginx"' >> /etc/bashrc
 RUN echo 'alias run_luigid="luigid --address 0.0.0.0 --port 8082 --state-path /luigi/state"' >> /etc/bashrc
 CMD bash -i -l -c "run_nginx; run_luigid"
