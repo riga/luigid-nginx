@@ -29,13 +29,26 @@ RUN htpasswd -n -b user pass > /luigi/htpasswd
 
 # luigi setup
 COPY luigi.conf luigi.conf
-ENV LUIGI_CONFIG_PATH /luigi/luigi.conf
+COPY luigi_taskhistory.conf luigi_taskhistory.conf
+ENV LUIGI_TASK_HISTORY 0
 RUN echo -e '\n\
 export PATH="$PATH:$HOME/.local/bin"\n\
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python2.7/site-packages"\n' >> /etc/bashrc
 RUN pip install luigi --user
 
-# default command, saved as aliases
-RUN echo 'alias run_nginx="nginx"' >> /etc/bashrc
-RUN echo 'alias run_luigid="luigid --address 0.0.0.0 --port 8082 --state-path /luigi/state"' >> /etc/bashrc
+# default command, split into functions
+RUN echo $'\n\
+run_nginx() {\n\
+    nginx\n\
+}\n\
+export -f run_nginx\n' >> /etc/bashrc
+
+RUN echo $'\n\
+run_luigid() {\n\
+    local luigi_config_path="/luigi/luigi.conf"\n\
+    [ "$LUIGI_TASK_HISTORY" = "1" ] && luigi_config_path="/luigi/luigi_taskhistory.conf"\n\
+    LUIGI_CONFIG_PATH="$luigi_config_path" luigid --address 0.0.0.0 --port 8082 --state-path /luigi/state\n\
+}\n\
+export -f run_luigid\n' >> /etc/bashrc
+
 CMD bash -i -l -c "run_nginx; run_luigid"
