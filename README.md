@@ -2,6 +2,9 @@
 
 Docker image to run a [luigi](http://luigi.readthedocs.io/) scheduler behind an [nginx](http://nginx.org) reverse proxy with basic authentication.
 
+- [GitHub repository](https://github.com/riga/luigid-nginx)
+- [DockerHub repository](https://cloud.docker.com/repository/docker/riga/luigid-nginx)
+
 
 ## Exposed ports
 

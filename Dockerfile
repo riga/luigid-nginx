@@ -31,7 +31,7 @@ RUN htpasswd -n -b user pass > /luigi/htpasswd
 COPY luigi.conf luigi.conf
 COPY luigi_taskhistory.conf luigi_taskhistory.conf
 ENV LUIGI_TASK_HISTORY 0
-RUN echo -e '\n\
+RUN echo $'\n\
 export PATH="$PATH:$HOME/.local/bin"\n\
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python2.7/site-packages"\n' >> /etc/bashrc
 RUN pip install luigi --user
