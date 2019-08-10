@@ -34,7 +34,7 @@ ENV LUIGI_TASK_HISTORY 0
 RUN echo $'\n\
 export PATH="$PATH:$HOME/.local/bin"\n\
 export PYTHONPATH="$PYTHONPATH:$HOME/.local/lib/python2.7/site-packages"\n' >> /etc/bashrc
-RUN pip install luigi --user
+RUN pip install luigi sqlalchemy --user
 
 # default command, split into functions
 RUN echo $'\n\
